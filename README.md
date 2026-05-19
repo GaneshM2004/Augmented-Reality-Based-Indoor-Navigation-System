@@ -1,6 +1,6 @@
 # TCE Navigation System — Accessible Campus Navigator
 
-An **offline, node-based indoor navigation Android app** built for **TCE campus**, designed with accessibility at its core. Supports four user categories — each with a dedicated navigation experience tailored to their needs.
+An **offline, node-based indoor navigation Android app** built for **TCE campus**, designed with accessibility at its core. Supports four user categories each with a dedicated navigation experience tailored to their needs.
 
 > Built on top of [FESTU Navigator](https://github.com/Gebort/FESTU.Navigator) by [Gebort](https://github.com/Gebort), adapted and deployed for TCE.
 
@@ -8,7 +8,7 @@ An **offline, node-based indoor navigation Android app** built for **TCE campus*
 
 ##  What It Does
 
-Students, staff, and visitors can navigate the entire TCE campus — rooms, labs, offices, blocks, and corridors — **fully offline, no internet needed**.
+Students, staff, and visitors can navigate the entire TCE campus rooms, labs, offices, blocks, and corridors ,**fully offline, no internet needed**.
 
 The app supports **four accessibility modes**, each with its own purpose-mapped node graph:
 
@@ -24,7 +24,7 @@ The app supports **four accessibility modes**, each with its own purpose-mapped 
 ## My Contributions
 
 ### 1. Mapped Multiple Accessibility Node Graphs
-Using the admin app, I created **separate node databases for each user type** across TCE campus — covering:
+Using the admin app, I created **separate node databases for each user type** across TCE campus covering:
 - Main Entrance, Principal Office, Management Office, Placement Office
 - All department branches
 - Library, Auditorium, Labs
@@ -32,10 +32,10 @@ Using the admin app, I created **separate node databases for each user type** ac
 For the **wheelchair graph**, routes were deliberately mapped to exclude staircases and inaccessible corridors, requiring careful planning of alternative paths across the campus.
 
 ### 2. Set Up the Call Assistant System (Visual Impaired)
-Configured the "Call Assistant" feature — a button that directly dials a designated helper's number, giving visually impaired users real human support while navigating.
+Configured the "Call Assistant" feature, a button that directly dials a designated helper's number, giving visually impaired users real human support while navigating.
 
 ### 3. Built an APK Distribution Website
-Created a website where users can download the APK for each accessibility mode directly — since the four variants are separate builds with different node databases.
+Created a website where users can download the APK for each accessibility mode directly, since the four variants are separate builds with different node databases.
 
 ### 4. Dependency & Build Fixes
 The original project had outdated or version-pinned Gradle dependencies. Resolved compatibility issues and removed stale version locks to get all modules building cleanly.
@@ -70,7 +70,7 @@ The node graph covers the following areas of TCE:
 | Language | Kotlin |
 | Platform | Android |
 | Navigation | Graph-based pathfinding (node/edge model) |
-| Data | Local SQLite node database — fully offline |
+| Data | Local SQLite node database |
 | Build | Gradle |
 | Distribution | Custom website for APK downloads |
 
@@ -97,6 +97,8 @@ The `admin` module lets you add/edit nodes and paths:
 2. Add nodes (rooms, junctions, landmarks)
 3. Connect nodes with edges — for wheelchair mode, **only add edges on accessible, stair-free paths**
 4. Export — the main app reads the database automatically
+
+<img width="390" height="561" alt="image" src="https://github.com/user-attachments/assets/290d6758-e2fd-496d-b999-b19206fb5ef6" />
 
 ---
 
