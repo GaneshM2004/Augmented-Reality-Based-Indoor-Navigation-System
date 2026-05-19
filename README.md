@@ -1,111 +1,110 @@
-# FESTU.Navigator
+# TCE Navigation System — Accessible Campus Navigator
 
+An **offline, node-based indoor navigation Android app** built for **TCE campus**, designed with accessibility at its core. Supports four user categories — each with a dedicated navigation experience tailored to their needs.
 
-The project, developed for a FESTU university (city Khabarovsk) competition, implements AR navigation through the FESTU university buildings along a pre-created corridor graph. 
-Work with AR is done entirely using the SceneView library
+> Built on top of [FESTU Navigator](https://github.com/Gebort/FESTU.Navigator) by [Gebort](https://github.com/Gebort), adapted and deployed for TCE.
 
-**Video demonstration available below**
+---
 
-The application builds routes between university classrooms. When launching the application, it is required to scan the number of the nearest classroom in order to set the starting point of the route. 
-Classrooms number recognition performed using Google MLKit. 
+##  What It Does
 
-**By default, the recognizable classroom number must be vertical and not contain letters in the name**
+Students, staff, and visitors can navigate the entire TCE campus — rooms, labs, offices, blocks, and corridors — **fully offline, no internet needed**.
 
+The app supports **four accessibility modes**, each with its own purpose-mapped node graph:
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/185281107-2485e7b1-2a59-4fce-9049-7830cd024d96.png" width="250" />
-</p>
+| Mode | How it works |
+|---|---|
+| Normal User | Standard campus navigation across all routes |
+| Wheelchair User | Routes mapped to **avoid stairs and inaccessible paths** |
+| Deaf & Dumb User | Full visual navigation, same coverage as normal user |
+| Visual Impaired User | Navigation + **"Call Assistant" button** that connects to a live helper |
 
-<br>
+---
 
-It is required to confirm the recognized classroom number and its position in 3D space, since an error is possible in determining the planes around the user
+## My Contributions
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/185281219-aa1f2617-9328-47fa-a175-f5563780730b.png" width="250" />
-</p>
+### 1. Mapped Multiple Accessibility Node Graphs
+Using the admin app, I created **separate node databases for each user type** across TCE campus — covering:
+- Main Entrance, Principal Office, Management Office, Placement Office
+- All department branches
+- Library, Auditorium, Labs
 
-<br>
+For the **wheelchair graph**, routes were deliberately mapped to exclude staircases and inaccessible corridors, requiring careful planning of alternative paths across the campus.
 
-Initialization is required to determine the user's current position relative to the saved classrooms graph. After initialization, the user can select both the start and end points of the route
+### 2. Set Up the Call Assistant System (Visual Impaired)
+Configured the "Call Assistant" feature — a button that directly dials a designated helper's number, giving visually impaired users real human support while navigating.
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/185281644-cd024077-782f-450b-818a-38546d7b6638.png" width="250" />
-</p>
+### 3. Built an APK Distribution Website
+Created a website where users can download the APK for each accessibility mode directly — since the four variants are separate builds with different node databases.
 
-<br>
+### 4. Dependency & Build Fixes
+The original project had outdated or version-pinned Gradle dependencies. Resolved compatibility issues and removed stale version locks to get all modules building cleanly.
 
-The built route thanks to the SceneView AR library is displayed in 3D space in front of the user. Finding the shortest route is done using the A* algorithm, path smoothing is done using Bezier curves. 
+---
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/185281417-9d558881-1cf6-43cc-9e62-852645bbdcd8.jpeg" width="200" />
-    <img src="https://user-images.githubusercontent.com/35885530/185281425-3fb933ed-e07c-4600-90cb-c6ed4d755526.jpg" width="200" />
-</p>
+## Campus Coverage
 
-<br>
+The node graph covers the following areas of TCE:
 
-The classrooms graph is created manually by the application administrator through a special interface
+- **Main Entrance Block** — Main Entrance, Office, Principal Office, Management Office, Placement Office
+- **Branches** — All department blocks
+- **Library**
+- **Auditorium**
+- **Labs**
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/185282075-e17f1e4f-6ebb-43c0-a644-d8d591758ec0.png" width="250" />
-</p>
+---
 
-<br>
+## Screenshots
 
-## Video demonstration
-https://user-images.githubusercontent.com/35885530/185282923-e424978b-de67-486c-a4b1-ebde455ae3ee.mp4
+| Home Screen | Campus Blocks |
+|---|---|
+| ![Home](screenshots/home.png) | ![Blocks](screenshots/blocks.png) |
 
-## Settings
-You can change the path rendering distance (increase the number of nodes) and other settings, in festunavigator/presentation/preview/PreviewFragment.kt:
-```kotlin
-360 companion object {
-361        //path rendering distance (number of nodes)
-362        const val VIEWABLE_PATH_NODES = 21
-363        //tree rendering distance, used only in admin mode
-364        const val VIEWABLE_ADMIN_NODES = 5f
-365        //how often the check for path and tree redraw will be
-366        const val POSITION_DETECT_DELAY = 100L
-367        //image crop for recognition
-368        val DESIRED_CROP = Pair(8, 72)
-369    }
-```
-You can change the classroom number template (first char must be a digit by standard) in festunavigator/data/ml/classification/TextAnalyzer.kt:
-```kotlin
-143    private fun filterFunction(text: Text.TextBlock): Boolean {
-144        return text.text[0].isDigit()
-145    }
-```
+---
 
-## Admin/User mode
-To enable the audience graph editing mode, change the build variant to adminDebug or adminRelease:
+## Tech Stack
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/35885530/186618592-0728c71b-8d19-4874-89ae-0e3a8986c7d2.png" width="300" />
-</p>
+| Layer | Technology |
+|---|---|
+| Language | Kotlin |
+| Platform | Android |
+| Navigation | Graph-based pathfinding (node/edge model) |
+| Data | Local SQLite node database — fully offline |
+| Build | Gradle |
+| Distribution | Custom website for APK downloads |
 
-<br>
+---
 
-By default, the application is installed with a pre-installed FESTU university classrooms graph. To run the application without a pre-installed graph, in festunavigator/domain/di/ModuleApp.kt find:
-```kotlin
-32 return Room.databaseBuilder(this, GraphDatabase::class.java, DATABASE_NAME)
-33     .createFromAsset(DATABASE_DIR)
-34     .allowMainThreadQueries()
-35     .addMigrations()
-36     .build()
-```
-Remove line - .createFromAsset(DATABASE_DIR):
-```kotlin
-32 return Room.databaseBuilder(this, GraphDatabase::class.java, DATABASE_NAME)
-33     .allowMainThreadQueries()
-35     .addMigrations()
-34     .build()
+## Getting Started
+
+### Prerequisites
+- Android Studio (latest stable)
+- Android SDK 21+
+
+### Run Locally
+
+```bash
+git clone https://github.com/YOUR_USERNAME/tce-navigator.git
+# Open in Android Studio → Sync Gradle → Run
 ```
 
-Now you can run the app and experience it anywhere
+### Admin App — Editing the Node Graph
 
-## Admin mode video demonstration
+The `admin` module lets you add/edit nodes and paths:
 
-An example of setting up navigation in a new space is available here (the video is too long for github): https://drive.google.com/file/d/11a_lTeQmXhMfE2AxJ8mg5ec34yCC1uoH/view?usp=sharing
+1. Open the `admin` module in Android Studio
+2. Add nodes (rooms, junctions, landmarks)
+3. Connect nodes with edges — for wheelchair mode, **only add edges on accessible, stair-free paths**
+4. Export — the main app reads the database automatically
 
+---
 
+## Credits
 
+Core navigation engine, pathfinding logic, and UI are from [FESTU Navigator](https://github.com/Gebort/FESTU.Navigator) by [Gebort](https://github.com/Gebort). This repo is an accessibility-focused adaptation for TCE campus.
 
+---
+
+## 📄 License
+
+Refer to the original project: [FESTU Navigator License](https://github.com/Gebort/FESTU.Navigator)
