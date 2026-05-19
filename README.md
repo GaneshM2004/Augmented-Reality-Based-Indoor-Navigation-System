@@ -85,7 +85,7 @@ The node graph covers the following areas of TCE:
 ### Run Locally
 
 ```bash
-git clone [https://github.com/GaneshM2004/Augmented-Reality-Based-Indoor-Navigation-System.git]
+git clone https://github.com/GaneshM2004/Augmented-Reality-Based-Indoor-Navigation-System.git
 # Open in Android Studio → Sync Gradle → Run
 ```
 
