@@ -9,12 +9,13 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    namespace 'com.example.tcenavigator'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.festunavigator"
+        applicationId "com.example.tcenavigator"
         minSdk 24
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -29,12 +30,14 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -128,7 +131,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha01"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1'
+    implementation 'org.jetbrains.kotlinx:coroutines-play-services:1.6.1'
 
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
