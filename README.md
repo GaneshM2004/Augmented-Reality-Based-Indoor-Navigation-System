@@ -56,7 +56,7 @@ The node graph covers the following areas of TCE:
 
 ## Screenshots
 
-| Home Screen | Campus Blocks |
+| Webpage | Campus Navigation |
 |-------------|---------------|
 | ![Webpage](https://github.com/user-attachments/assets/495b0e4c-ac6f-4253-965c-b23d017c0561) | ![Campus navigation](https://github.com/user-attachments/assets/4176ec1d-98c4-4639-b359-be2f80ddb1d3) |
 
